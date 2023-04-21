@@ -74,10 +74,10 @@ This repository contains the following Selenium tests:
   set BROWSERSTACK_ACCESS_KEY=<browserstack-access-key>
   ```
 
-  Alternatively, you can also hardcode username and access_key objects in the [browserstack.yml](browserstack.yml) file.
+  Alternatively, you can also hardcode username and access_key objects in the [browserstack-android.yml & browserstack-ios.yml] file.
 
 Note:
-- We have configured a list of test capabilities in the [browserstack.yml](browserstack.yml) file. You can certainly update them based on your device / browser test requirements.
+- We have configured a list of test capabilities in the [browserstack-android.yml & browserstack-ios.yml] file. You can certainly update them based on your device / browser test requirements.
 - The exact test capability values can be easily identified using the [Browserstack Capability Generator](https://browserstack.com/automate/capabilities)
 
 
@@ -85,7 +85,7 @@ Note:
 
 ### Run a specific test on BrowserStack
 
-In this section, we will run a single test on Chrome browser on Browserstack. To change test capabilities for this configuration, please refer to the [`browserstack-single.yml`](src/test/resources/conf/browserstack-single.yml) file.
+In this section, we will run a single test on Chrome browser on Browserstack. To change test capabilities for this configuration, please refer to the [browserstack-android.yml & browserstack-ios.yml] file.
 
 - How to run the test?
 
@@ -95,12 +95,14 @@ In this section, we will run a single test on Chrome browser on Browserstack. To
   - For \*nix based and Mac machines:
 
   ```sh
-  rm -f -- browserstack.yml & ln src/test/resources/conf/browserstack-single.yml browserstack.yml & mvn test -P bstack-single
+  mvn test -P bstack-single -Dbrowserstack.config="browserstack-ios.yml" //For IOS app
+  mvn test -P bstack-single -Dbrowserstack.config="browserstack-android.yml" //For Android App
   ```
   - For Windows:
 
   ```sh
-  del /f "browserstack.yml" && copy /y .\src\test\resources\conf\browserstack-single.yml browserstack.yml & mvn test -P bstack-single
+  mvn test -P bstack-single -Dbrowserstack.config="browserstack-ios.yml" //For IOS app
+  mvn test -P bstack-single -Dbrowserstack.config="browserstack-android.yml" //For Android app
   ```
 
 
@@ -108,39 +110,22 @@ In this section, we will run a single test on Chrome browser on Browserstack. To
   - For \*nix based and Mac machines:
 
   ```sh
-  rm -f -- browserstack.yml & ln src/test/resources/conf/browserstack-single.yml browserstack.yml & gradle bstack-single
+  gradle bstack-single -Dbrowserstack.config="browserstack-ios.yml"
   ```
   - For Windows:
 
   ```sh
-  del /f "browserstack.yml" && copy /y .\src\test\resources\conf\browserstack-single.yml browserstack.yml & gradle bstack-single
+  gradle bstack-single -Dbrowserstack.config="browserstack-ios.yml"
   ```
-
-  To run a specific test scenario, use the following command with the additional 'test-name' argument:
-  
-  Maven:
-  ```sh
-  rm -f -- browserstack.yml & ln src/test/resources/conf/browserstack-single.yml browserstack.yml & mvn test -P bstack-single -Dtest-name="<Test scenario name>"
-  ```
-
-  Gradle:
-  ```sh
-  rm -f -- browserstack.yml & ln src/test/resources/conf/browserstack-single.yml browserstack.yml & gradle bstack-single -Dtest-name="<Test scenario name>"
-  ```
-
-  where,  the argument 'test-name' can be any Cucumber scenario name configured in this repository.
-
-  E.g. "Login as username", "Login as Locked User", "Offers for mumbai geo-location" or any of the other test scenario names, as outlined in [About the tests in this repository](#About-the-tests-in-this-repository) section.
-
 
 - Output
 
   This run profile executes a single test on a single browser on BrowserStack. Please refer to your [BrowserStack dashboard](https://automate.browserstack.com/) for test results.
 
 
-### Run the entire test suite in parallel on a single BrowserStack browser
+### Run the entire test suite in parallel
 
-In this section, we will run the tests in parallel on a single browser on Browserstack. Refer to [`browserstack-parallel.yml`](src/test/resources/conf/browserstack-parallel.yml) file to change test capabilities for this configuration.
+In this section, we will run the tests in parallel on a single browser on Browserstack. Refer to [browserstack-android.yml & browserstack-ios.yml] file to change test capabilities for this configuration.
 
 - How to run the test?
 
@@ -150,12 +135,14 @@ In this section, we will run the tests in parallel on a single browser on Browse
   - For \*nix based and Mac machines:
 
   ```sh
-  rm -f -- browserstack.yml & ln src/test/resources/conf/browserstack-parallel.yml browserstack.yml & mvn test -P bstack-parallel
+  mvn test -P bstack-parallel -Dbrowserstack.config="browserstack-ios.yml" //For IOS app
+  mvn test -P bstack-parallel -Dbrowserstack.config="browserstack-android.yml" 
   ```
   - For Windows:
 
   ```sh
-  del /f "browserstack.yml" && copy /y .\src\test\resources\conf\browserstack-parallel.yml browserstack.yml & mvn test -P bstack-parallel
+  mvn test -P bstack-parallel -Dbrowserstack.config="browserstack-ios.yml" //For IOS app
+  mvn test -P bstack-parallel -Dbrowserstack.config="browserstack-andriod.yml" //for Android App
   ```
 
 
@@ -176,180 +163,6 @@ In this section, we will run the tests in parallel on a single browser on Browse
 
   This run profile executes the entire test suite in parallel on a single BrowserStack browser. Please refer to your [BrowserStack dashboard](https://automate.browserstack.com/) for test results.
 
-
-### Run the entire test suite in parallel on multiple BrowserStack browsers
-
-In this section, we will run the tests in parallel on multiple browsers on Browserstack. Refer to the [`browserstack-parallel-browsers.yml`](src/test/resources/conf/browserstack-parallel-browsers.yml) file to change test capabilities for this configuration.
-
-- How to run the test?
-
-  To run the entire test suite in parallel on multiple BrowserStack browsers, use the following command:
-
-    Maven:
-  - For \*nix based and Mac machines:
-
-  ```sh
-  rm -f -- browserstack.yml & ln src/test/resources/conf/browserstack-parallel-browsers.yml browserstack.yml & mvn test -P bstack-parallel-browsers
-  ```
-  - For Windows:
-
-  ```sh
-  del /f "browserstack.yml" && copy /y .\src\test\resources\conf\browserstack-parallel-browsers.yml browserstack.yml & mvn test -P bstack-parallel-browsers
-  ```
-
-
-  Gradle:
-  - For \*nix based and Mac machines:
-  ```sh
-  rm -f -- browserstack.yml & ln src/test/resources/conf/browserstack-parallel-browsers.yml browserstack.yml & gradle bstack-parallel-browsers
-  ```
-  - For Windows:
-
-  ```sh
-  del /f "browserstack.yml" && copy /y .\src\test\resources\conf\browserstack-parallel-browsers.yml browserstack.yml & gradle bstack-parallel-browsers
-  ```
-
-### [Web application hosted on internal environment] Running your tests on BrowserStack using BrowserStackLocal
-
-#### Prerequisites
-
-- Clone the [BrowserStack demo application](https://github.com/browserstack/browserstack-demo-app) repository.
-  ```sh
-  git clone https://github.com/browserstack/browserstack-demo-app
-  ``` 
-- Please follow the README.md on the BrowserStack demo application repository to install and start the dev server on localhost.
-- In this section, we will run a single test case to test the BrowserStack Demo app hosted on your local machine i.e. localhost. Refer to the [`browserstack-local.yml`](src/test/resources/conf/browserstack-local.yml) file to change test capabilities for this configuration.
-- Note: You may need to provide additional BrowserStackLocal arguments to successfully connect your localhost environment with BrowserStack infrastructure. (e.g if you are behind firewalls, proxy or VPN).
-- Further details for successfully creating a BrowserStackLocal connection can be found here:
-
-  - [Local Testing with Automate](https://www.browserstack.com/local-testing/automate)
-  - [BrowserStackLocal Java GitHub](https://github.com/browserstack/browserstack-local-java)
-
-
-### [Web application hosted on internal environment] Run a specific test on BrowserStack using BrowserStackLocal
-
-- How to run the test?
-
-  - To run the default test scenario (e.g. End to End Scenario) on a single BrowserStack browser using BrowserStackLocal, use the following command:
-
-   Maven:
-  - For \*nix based and Mac machines:
-
-  ```sh
-  rm -f -- browserstack.yml & ln src/test/resources/conf/browserstack-local.yml browserstack.yml & mvn test -P bstack-local
-  ```
-  - For Windows:
-
-  ```sh
-  del /f "browserstack.yml" && copy /y .\src\test\resources\conf\browserstack-local.yml browserstack.yml & mvn test -P bstack-local
-  ```
-
-
-  Gradle:
-  - For \*nix based and Mac machines:
-  ```sh
-  rm -f -- browserstack.yml & ln src/test/resources/conf/browserstack-local.yml browserstack.yml & gradle bstack-local
-  ```
-  - For Windows:
-
-  ```sh
-  del /f "browserstack.yml" && copy /y .\src\test\resources\conf\browserstack-local.yml browserstack.yml & gradle bstack-local
-  ```
-
-  To run a specific test scenario, use the following command with the additional test-name argument:
-  
-  Maven:
-  ```sh
-  rm -f -- browserstack.yml & ln src/test/resources/conf/browserstack-local.yml browserstack.yml & mvn test -P bstack-local -Dtest-name="<Test scenario name>"
-  ```
-
-  Gradle:
-  ```sh
-  rm -f -- browserstack.yml & ln src/test/resources/conf/browserstack-local.yml browserstack.yml & gradle bstack-local -Dtest-name="<Test scenario name>"
-  ```
-
-  where,  the argument 'test-name' can be any Cucumber scenario name configured in this repository.
-
-  E.g. "Login as username", "Login as Locked User", "Offers for mumbai geo-location" or any of the other test scenario names, as outlined in [About the tests in this repository](#About-the-tests-in-this-repository) section.
-
-
-- Output
-
-  This run profile executes a single test on an internally hosted web application on a single browser on BrowserStack. Please refer to your BrowserStack dashboard(https://automate.browserstack.com/) for test results.
-
-
-### [Web application hosted on internal environment] Run the entire test suite in parallel on a single BrowserStack browser using BrowserStackLocal
-
-In this section, we will run the test cases to test the internally hosted website in parallel on a single browser on Browserstack. Refer to the [`browserstack-local-parallel.yml`](src/test/resources/conf/browserstack-local-parallel.yml) file to change test capabilities for this configuration.
-
-- How to run the test?
-
-  To run the entire test suite in parallel on a single BrowserStack browser using BrowserStackLocal, use the following command:
-  
-  Maven:
-  - For \*nix based and Mac machines:
-
-  ```sh
-  rm -f -- browserstack.yml & ln src/test/resources/conf/browserstack-local-parallel.yml browserstack.yml & mvn test -P bstack-local-parallel
-  ```
-  - For Windows:
-
-  ```sh
-  del /f "browserstack.yml" && copy /y .\src\test\resources\conf\browserstack-local-parallel.yml browserstack.yml & mvn test -P bstack-local-parallel
-  ```
-
-
-  Gradle:
-  - For \*nix based and Mac machines:
-  ```sh
-  rm -f -- browserstack.yml & ln src/test/resources/conf/browserstack-local-parallel.yml browserstack.yml & gradle bstack-local-parallel
-  ```
-  - For Windows:
-
-  ```sh
-  del /f "browserstack.yml" && copy /y .\src\test\resources\conf\browserstack-local-parallel.yml browserstack.yml & gradle bstack-local-parallel
-  ```
-
-- Output
-
-  This run profile executes the entire test suite on an internally hosted web application on a single browser on BrowserStack. Please refer to your [BrowserStack dashboard](https://automate.browserstack.com/) for test results.
-
-
-### [Web application hosted on internal environment] Run the entire test suite in parallel on multiple BrowserStack browser using BrowserStackLocal
-
-In this section, we will run the test cases to test the internally hosted website in parallel on multiple browsers on Browserstack. Refer to the [`browserstack-local-parallel-browsers.yml`](src/test/resources/conf/browserstack-local-parallel-browsers.yml) file to change test capabilities for this configuration.
-
-- How to run the test?
-
-  To run the entire test suite in parallel on a single BrowserStack browser using BrowserStackLocal, use the following command:
-
-   Maven:
-  - For \*nix based and Mac machines:
-
-  ```sh
-  rm -f -- browserstack.yml & ln src/test/resources/conf/browserstack-local-parallel-browsers.yml browserstack.yml & mvn test -P bstack-local-parallel-browsers
-  ```
-  - For Windows:
-
-  ```sh
-  del /f "browserstack.yml" && copy /y .\src\test\resources\conf\browserstack-parallel-browsers.yml browserstack.yml & mvn test -P bstack-local-parallel-browsers
-  ```
-
-
-  Gradle:
-  - For \*nix based and Mac machines:
-  ```sh
-  rm -f -- browserstack.yml & ln src/test/resources/conf/browserstack-local-parallel-browsers.yml browserstack.yml & gradle bstack-local-parallel-browsers
-  ```
-  - For Windows:
-
-  ```sh
-  del /f "browserstack.yml" && copy /y .\src\test\resources\conf\browserstack-local-parallel-browsers.yml browserstack.yml & gradle bstack-local-parallel-browsers
-  ```
-
-- Output
-
-  This run profile executes the entire test suite on an internally hosted web application on multiple browsers on BrowserStack. Please refer to your [BrowserStack dashboard](https://automate.browserstack.com/) for test results.
 
 
 ## Generating Allure Reports
