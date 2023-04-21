@@ -1,0 +1,128 @@
+apply plugin: 'java'
+apply plugin: 'io.qameta.allure'
+
+repositories {
+    mavenCentral()
+}
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "io.qameta.allure:allure-gradle:2.8.1"
+    }
+}
+
+dependencies {
+    implementation 'org.seleniumhq.selenium:selenium-java:4.1.4'
+    testImplementation 'org.apache.commons:commons-lang3:3.11'
+    implementation 'commons-io:commons-io:2.6'
+    testImplementation 'io.cucumber:cucumber-java:7.3.4'
+    testImplementation 'io.cucumber:cucumber-testng:7.3.4'
+    testImplementation 'io.cucumber:cucumber-core:7.3.4'
+    compileOnly 'com.browserstack:browserstack-java-sdk:latest.release'
+}
+
+group = 'com.browserstack'
+version = '1.0-SNAPSHOT'
+description = 'browserstack-examples-cucumber-testng'
+sourceCompatibility = JavaVersion.VERSION_1_8
+
+def browserstackSDKArtifact = configurations.compileClasspath.resolvedConfiguration.resolvedArtifacts.find { it.name == 'browserstack-java-sdk' }
+
+tasks.register('bstack-single', Test){
+    systemProperty "cucumber.filter.tags", System.getProperty("cucumber.filter.tags")
+    systemProperty "dataproviderthreadcount", System.getProperty("num.parallels")
+    systemProperty "browserstack-local", "false" 
+    systemProperty "cucumber.publish.quiet" , "true"
+    systemProperty "cucumber.features" , "src/test/resources/features/e2e.feature"
+     systemProperties System.getProperties()
+    useTestNG() {
+        dependsOn clean
+        useDefaultListeners = true
+        suites 'src/test/resources/conf/testng.xml'
+        jvmArgs "-javaagent:${browserstackSDKArtifact.file}"
+    }
+    scanForTestClasses = false
+}
+
+tasks.register('bstack-parallel', Test){
+    systemProperty "cucumber.filter.tags", System.getProperty("cucumber.filter.tags")
+    systemProperty "dataproviderthreadcount", System.getProperty("num.parallels")
+    systemProperty "browserstack-local", "false" 
+    systemProperty "cucumber.publish.quiet" , "true"
+    systemProperty "cucumber.features" , "src/test/resources/features"
+     systemProperties System.getProperties()
+    useTestNG() {
+        dependsOn clean
+        useDefaultListeners = true
+        suites 'src/test/resources/conf/testng.xml'
+        jvmArgs "-javaagent:${browserstackSDKArtifact.file}"
+    }
+    scanForTestClasses = false
+}
+
+tasks.register('bstack-parallel-browsers', Test){
+    systemProperty "cucumber.filter.tags", System.getProperty("cucumber.filter.tags")
+    systemProperty "dataproviderthreadcount", System.getProperty("num.parallels")
+    systemProperty "browserstack-local", "false" 
+    systemProperty "cucumber.publish.quiet" , "true"
+    systemProperty "cucumber.features" , "src/test/resources/features"
+     systemProperties System.getProperties()
+    useTestNG() {
+        dependsOn clean
+        useDefaultListeners = true
+        suites 'src/test/resources/conf/testng.xml'
+        jvmArgs "-javaagent:${browserstackSDKArtifact.file}"
+    }
+    scanForTestClasses = false
+}
+
+tasks.register('bstack-local', Test){
+    systemProperty "cucumber.filter.tags", System.getProperty("cucumber.filter.tags")
+    systemProperty "dataproviderthreadcount", System.getProperty("num.parallels")
+    systemProperty "browserstack-local", "true" 
+    systemProperty "cucumber.publish.quiet" , "true"
+    systemProperty "cucumber.features" , "src/test/resources/features/e2e.feature"
+     systemProperties System.getProperties()
+    useTestNG() {
+        dependsOn clean
+        useDefaultListeners = true
+        suites 'src/test/resources/conf/testng.xml'
+        jvmArgs "-javaagent:${browserstackSDKArtifact.file}"
+    }
+    scanForTestClasses = false
+}
+
+tasks.register('bstack-local-parallel', Test){
+    systemProperty "cucumber.filter.tags", System.getProperty("cucumber.filter.tags")
+    systemProperty "dataproviderthreadcount", System.getProperty("num.parallels")
+    systemProperty "browserstack-local", "true" 
+    systemProperty "cucumber.publish.quiet" , "true"
+    systemProperty "cucumber.features" , "src/test/resources/features"
+     systemProperties System.getProperties()
+    useTestNG() {
+        dependsOn clean
+        useDefaultListeners = true
+        suites 'src/test/resources/conf/testng.xml'
+        jvmArgs "-javaagent:${browserstackSDKArtifact.file}"
+    }
+    scanForTestClasses = false
+}
+
+tasks.register('bstack-local-parallel-browsers', Test){
+    systemProperty "cucumber.filter.tags", System.getProperty("cucumber.filter.tags")
+    systemProperty "dataproviderthreadcount", System.getProperty("num.parallels")
+    systemProperty "browserstack-local", "true" 
+    systemProperty "cucumber.publish.quiet" , "true"
+    systemProperty "cucumber.features" , "src/test/resources/features"
+     systemProperties System.getProperties()
+    useTestNG() {
+        dependsOn clean
+        useDefaultListeners = true
+        suites 'src/test/resources/conf/testng.xml'
+        jvmArgs "-javaagent:${browserstackSDKArtifact.file}"
+    }
+    scanForTestClasses = false
+}
