@@ -110,12 +110,14 @@ In this section, we will run a single test on Chrome browser on Browserstack. To
   - For \*nix based and Mac machines:
 
   ```sh
-  gradle bstack-single -Dbrowserstack.config="browserstack-ios.yml"
+  gradle bstack-single -Dbrowserstack.config="browserstack-ios.yml" //For IOS app
+  gradle bstack-single -Dbrowserstack.config="browserstack-android.yml" //for Android App
   ```
   - For Windows:
 
   ```sh
-  gradle bstack-single -Dbrowserstack.config="browserstack-ios.yml"
+  gradle bstack-single -Dbrowserstack.config="browserstack-ios.yml" //For IOS app
+  gradle bstack-single -Dbrowserstack.config="browserstack-android.yml" //for Android App
   ```
 
 - Output
@@ -136,7 +138,7 @@ In this section, we will run the tests in parallel on a single browser on Browse
 
   ```sh
   mvn test -P bstack-parallel -Dbrowserstack.config="browserstack-ios.yml" //For IOS app
-  mvn test -P bstack-parallel -Dbrowserstack.config="browserstack-android.yml" 
+  mvn test -P bstack-parallel -Dbrowserstack.config="browserstack-android.yml" //for Android App
   ```
   - For Windows:
 
@@ -149,12 +151,14 @@ In this section, we will run the tests in parallel on a single browser on Browse
   Gradle:
   - For \*nix based and Mac machines:
   ```sh
-  rm -f -- browserstack.yml & ln src/test/resources/conf/browserstack-parallel.yml browserstack.yml & gradle bstack-parallel
+  gradle bstack-parallel -Dbrowserstack.config="browserstack-ios.yml" //For IOS app
+  gradle bstack-parallel -Dbrowserstack.config="browserstack-andriod.yml" //for Android App
   ```
   - For Windows:
 
   ```sh
-  del /f "browserstack.yml" && copy /y .\src\test\resources\conf\browserstack-parallel.yml browserstack.yml & gradle bstack-parallel
+  gradle bstack-parallel -Dbrowserstack.config="browserstack-ios.yml" //For IOS app
+  gradle bstack-parallel -Dbrowserstack.config="browserstack-andriod.yml" //for Android App
   ```
 
 
